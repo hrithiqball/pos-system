@@ -67,3 +67,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.link {
+  @apply cursor-pointer text-xs font-medium underline-offset-4 hover:text-blue-500;
+}
+
+.flexcenter {
+  @apply flex items-center;
+}
