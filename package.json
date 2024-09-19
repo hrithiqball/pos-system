@@ -1,0 +1,28 @@
+{
+  "name": "mcf-monorepo",
+  "description": "repository of Mishclis Fit projects",
+  "author": {
+    "name": "Harith Iqbal",
+    "email": "hrithiqball@gmail.com"
+  },
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --parallel dev",
+    "pristine-dev": "pnpm --parallel --filter '@app/pristine-hr-*' --filter @app/auth-service --filter '@pkg/*' dev",
+    "flow-dev": "pnpm --parallel --filter '@app/clarity-flow-*' --filter @app/auth-service --filter '@pkg/*' dev",
+    "format": "prettier --write 'packages/**/*.{js,ts,tsx,json,md}' 'apps/**/*.{js,ts,tsx,json,md}' 'docs/**/*.{js,ts,tsx,json,md}'",
+    "ui": "pnpm --filter @pkg/ui ui"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6"
+  },
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
+  "engines": {
+    "node": ">=20",
+    "pnpm": "9.10.0"
+  }
+}
