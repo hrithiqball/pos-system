@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import MainLayout from '@pkg/ui/layout/main-layout'
 import LoadingPage from '@pkg/ui/pages/loading-page'
 
+import { BrandSearch } from '@/components/brand-search'
+import { UserMenu } from '@/components/user-menu'
 import { LoginPage } from '@/pages/login-page'
 
 const NotFoundPage = lazy(() => import('@pkg/ui/pages/not-found-page'))
@@ -12,16 +14,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Suspense fallback={<LoadingPage lazy />}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <MainLayout
-                left={<span>left</span>}
-                middle={<span>middle</span>}
-                right={<span>right</span>}
-              />
-            }
-          >
+          <Route path="/" element={<MainLayout left={<BrandSearch />} right={<UserMenu />} />}>
             <Route index element={<span>home</span>} />
           </Route>
 

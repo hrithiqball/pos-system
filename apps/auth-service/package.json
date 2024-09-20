@@ -1,7 +1,9 @@
 {
   "name": "@app/auth-service",
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.2",
@@ -18,7 +20,8 @@
     "@pkg/typescript-config": "workspace:*",
     "@types/node": "^20.11.17",
     "prisma": "^5.19.1",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "typescript": "^5.6.2"
   },
   "exports": {
     "./*": "./src/*.ts",

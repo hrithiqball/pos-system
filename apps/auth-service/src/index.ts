@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
-import { env } from '@/config/env'
+import { env } from './config/env'
 import { authRouter } from './routes/auth'
 import { userRouter } from './routes/user'
 

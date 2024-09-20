@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 type MainLayoutProps = {
   left: ReactNode
-  middle: ReactNode
+  middle?: ReactNode
   right: ReactNode
 }
 

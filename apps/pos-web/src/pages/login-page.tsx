@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@pkg/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@pkg/ui/card'
@@ -15,7 +16,8 @@ import { toast } from 'sonner'
 import { $login, login } from '@/api/auth'
 
 export function LoginPage() {
-  const [, setCookie] = useCookies(['access_token'])
+  const [cookie, setCookie] = useCookies(['access_token'])
+  const navigate = useNavigate()
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
@@ -41,6 +43,14 @@ export function LoginPage() {
     },
     onError: err => toast.error(err.message)
   })
+
+  useEffect(() => {
+    if (cookie.access_token) {
+      navigate('/')
+    }
+
+    return () => {}
+  }, [cookie.access_token, navigate])
 
   function onSubmit(values: LoginSchema) {
     loginMutation.mutate(values)

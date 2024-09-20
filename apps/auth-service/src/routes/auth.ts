@@ -6,8 +6,8 @@ import { getCookie, setCookie } from 'hono/cookie'
 import { HTTPException } from 'hono/http-exception'
 import { sign } from 'hono/jwt'
 
-import { env } from '@/config/env'
-import db from '@/lib/db'
+import { env } from '../config/env'
+import db from '../lib/db'
 
 export const authRouter = new Hono()
   .post('/register', zValidator('form', registerSchema), async c => {
