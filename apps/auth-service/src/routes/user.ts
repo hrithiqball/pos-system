@@ -6,6 +6,7 @@ import { HTTPException } from 'hono/http-exception'
 export const userRouter = new Hono()
   .get('/me/:userId', authMiddleware, async c => {
     try {
+      // should just read from cookie without passing userId
       const { userId } = c.req.param()
 
       const user = await db.user.findUnique({ where: { id: Number(userId) } })

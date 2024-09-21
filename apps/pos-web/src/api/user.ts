@@ -1,5 +1,7 @@
+import { User } from '@app/auth-service/types/user'
 import { errorHandler } from '@pkg/validation/utils/error-handler'
 
+import { fetch } from '@/api/retry'
 import { authService } from '@/lib/hono'
 
 export async function getUser(email: string | null) {
@@ -8,15 +10,9 @@ export async function getUser(email: string | null) {
       throw new Error('Email is required')
     }
 
-    const response = await authService.api.user[':email'].$get({ param: { email } })
-
-    if (!response.ok) {
-      const errorMessage = await response.text()
-      throw new Error(errorMessage)
-    }
-
-    return await response.json()
+    return await fetch<User>(() => authService.api.user[':email'].$get({ param: { email } }))
   } catch (error) {
-    errorHandler(error)
+    const errorMessage = errorHandler(error)
+    throw new Error(errorMessage)
   }
 }

@@ -7,6 +7,7 @@ import { UserMenu } from '@/components/user-menu'
 import { MainLayout } from '@/layout/main-layout'
 import { CashierPage } from '@/pages/cashier-page'
 import { CustomersPage } from '@/pages/customers-page'
+import { DisplayPage } from '@/pages/display-page'
 import { HomePage } from '@/pages/home-page'
 import { LoginPage } from '@/pages/login-page'
 import { ReportsPage } from '@/pages/reports-page'
@@ -32,6 +33,7 @@ export default function AppRoutes() {
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/display" element={<DisplayPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

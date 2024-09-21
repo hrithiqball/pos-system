@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger
 } from '@pkg/ui/dropdown-menu'
 import { ErrorComponent } from '@pkg/ui/error'
-import { LoadingComponent } from '@pkg/ui/loading'
+import { Skeleton } from '@pkg/ui/skeleton'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { InferRequestType, InferResponseType } from 'hono'
 import { Bell, Moon, Sun } from 'lucide-react'
@@ -73,7 +73,7 @@ export function UserMenu() {
   }, [cookies.user_token, navigate])
 
   useEffect(() => {
-    if (!user) {
+    if (!user && userResponse) {
       setUser(userResponse)
     }
 
@@ -89,7 +89,14 @@ export function UserMenu() {
   }
 
   if (isLoading) {
-    return <LoadingComponent />
+    return (
+      <div className="flex items-center space-x-2">
+        <Skeleton className="size-8" />
+        <Skeleton className="size-8" />
+        <Skeleton className="w-32 h-8" />
+        <Skeleton className="rounded-full size-8" />
+      </div>
+    )
   }
 
   if (isError) {

@@ -1,3 +1,7 @@
 export function CustomersPage() {
-  return <div>CustomersPage</div>
+  return (
+    <div>
+      CustomersPage <button>hye</button>
+    </div>
+  )
 }

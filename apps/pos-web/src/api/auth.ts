@@ -15,23 +15,8 @@ export async function login(form: LoginSchema) {
 
     return await response.json()
   } catch (error) {
-    errorHandler(error)
-  }
-}
-
-export const $refresh = authService.api.auth.refresh.$post
-export async function refresh() {
-  try {
-    const response = await authService.api.auth.refresh.$post({})
-
-    if (!response.ok) {
-      const errorMessage = await response.text()
-      throw new Error(errorMessage)
-    }
-
-    return await response.json()
-  } catch (error) {
-    errorHandler(error)
+    const errorMessage = errorHandler(error)
+    throw new Error(errorMessage)
   }
 }
 

@@ -1,6 +1,5 @@
+import { User } from '@app/auth-service/types/user'
 import { create } from 'zustand'
-
-import { User } from '@/types/user'
 
 type UserState = {
   user: User | undefined
