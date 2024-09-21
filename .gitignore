@@ -58,7 +58,6 @@ coverage/
 
 # Configuration for various tools
 *.eslintcache
-*.prettierignore
 
 # Git
 .git/
