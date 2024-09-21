@@ -1,8 +1,7 @@
+import db from '@app/auth-service/lib/db'
+import { authMiddleware } from '@app/auth-service/middlewares/auth'
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
-
-import db from '../lib/db'
-import { authMiddleware } from '../middlewares/auth'
 
 export const userRouter = new Hono()
   .get('/me/:userId', authMiddleware, async c => {

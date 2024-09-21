@@ -2,6 +2,8 @@
   "extends": "@pkg/typescript-config/react-library.json",
   "compilerOptions": {
     "target": "ESNext",
+    "outDir": "dist",
+    "rootDir": "src",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "declaration": true,

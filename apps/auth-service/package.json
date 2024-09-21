@@ -18,13 +18,12 @@
   },
   "devDependencies": {
     "@pkg/typescript-config": "workspace:*",
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.16.5",
     "prisma": "^5.19.1",
     "tsx": "^4.7.1",
     "typescript": "^5.6.2"
   },
   "exports": {
-    "./*": "./src/*.ts",
-    "./rpp": "./src/types/rpc.ts"
+    "./*": "./src/*.ts"
   }
 }

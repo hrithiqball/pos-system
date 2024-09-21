@@ -54,6 +54,7 @@ coverage/
 *.tmp
 *.swp
 *.swo
+*.pem
 
 # Configuration for various tools
 *.eslintcache

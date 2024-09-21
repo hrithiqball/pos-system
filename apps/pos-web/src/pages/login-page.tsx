@@ -14,10 +14,12 @@ import { InferRequestType, InferResponseType } from 'hono'
 import { toast } from 'sonner'
 
 import { $login, login } from '@/api/auth'
+import { useAuthStore } from '@/store/use-auth'
 
 export function LoginPage() {
-  const [cookie, setCookie] = useCookies(['access_token'])
+  const [, setCookie] = useCookies(['user_token'])
   const navigate = useNavigate()
+  const { setAuthenticated, isAuthenticated } = useAuthStore()
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
@@ -38,19 +40,20 @@ export function LoginPage() {
       return response
     },
     onSuccess: data => {
-      setCookie('access_token', data.token, { expires: new Date(data.payload.exp * 1000) })
+      setCookie('user_token', data.token, { expires: new Date(data.payload.exp * 1000) })
+      setAuthenticated(true)
       toast.success('Login successful')
     },
     onError: err => toast.error(err.message)
   })
 
   useEffect(() => {
-    if (cookie.access_token) {
+    if (isAuthenticated) {
       navigate('/')
     }
 
     return () => {}
-  }, [cookie.access_token, navigate])
+  }, [navigate, isAuthenticated])
 
   function onSubmit(values: LoginSchema) {
     loginMutation.mutate(values)
@@ -61,7 +64,9 @@ export function LoginPage() {
       <Card className="min-w-96">
         <CardHeader>
           <CardTitle>Welcome</CardTitle>
-          <CardDescription>Sign in to your account</CardDescription>
+          <CardDescription>
+            Sign in to your account {isAuthenticated ? 'yes' : 'no'}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>

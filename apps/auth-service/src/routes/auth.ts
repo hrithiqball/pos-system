@@ -1,3 +1,5 @@
+import { env } from '@app/auth-service/config/env'
+import db from '@app/auth-service/lib/db'
 import { zValidator } from '@hono/zod-validator'
 import { loginSchema, registerSchema } from '@pkg/validation/auth'
 import { hash, verify } from 'argon2'
@@ -5,9 +7,6 @@ import { Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { HTTPException } from 'hono/http-exception'
 import { sign } from 'hono/jwt'
-
-import { env } from '../config/env'
-import db from '../lib/db'
 
 export const authRouter = new Hono()
   .post('/register', zValidator('form', registerSchema), async c => {
@@ -65,8 +64,16 @@ export const authRouter = new Hono()
         }
       })
 
-      setCookie(c, 'access_token', token, { httpOnly: true })
-      setCookie(c, 'refresh_token', refreshToken, { httpOnly: true })
+      setCookie(c, 'access_token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
+      })
+      setCookie(c, 'refresh_token', refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
+      })
 
       return c.json({
         payload,
@@ -97,9 +104,33 @@ export const authRouter = new Hono()
       const newPayload = { email: dbToken.user.email, exp: Math.floor(Date.now() / 1000) + 60 * 60 }
       const newAccessToken = await sign(newPayload, env.SECRET)
 
-      setCookie(c, 'access_token', newAccessToken, { httpOnly: true })
+      setCookie(c, 'access_token', newAccessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
+      })
 
       return c.json({ message: 'Token refreshed', accessToken: newAccessToken })
+    } catch (error) {
+      console.error(error)
+      if (error instanceof HTTPException) throw error
+      throw new HTTPException(500, { message: 'Internal Server Error' })
+    }
+  })
+  .post('/verify', async c => {
+    try {
+      const accessToken = getCookie(c, 'access_token')
+
+      if (!accessToken) {
+        throw new HTTPException(401, { message: 'Unauthorized' })
+      }
+
+      const payload = await verify(accessToken, env.SECRET)
+      if (!payload) {
+        throw new HTTPException(401, { message: 'Unauthorized' })
+      }
+
+      return c.json({ authenticated: true, payload })
     } catch (error) {
       console.error(error)
       if (error instanceof HTTPException) throw error
@@ -112,8 +143,18 @@ export const authRouter = new Hono()
       if (refreshToken) {
         await db.refreshToken.delete({ where: { token: refreshToken } })
 
-        setCookie(c, 'access_token', '', { httpOnly: true, maxAge: 0 })
-        setCookie(c, 'refresh_token', '', { httpOnly: true, maxAge: 0 })
+        setCookie(c, 'access_token', '', {
+          httpOnly: true,
+          secure: true,
+          maxAge: 0,
+          sameSite: 'None'
+        })
+        setCookie(c, 'refresh_token', '', {
+          httpOnly: true,
+          secure: true,
+          maxAge: 0,
+          sameSite: 'None'
+        })
 
         return c.json({ message: 'Logged out successfully' })
       } else {
