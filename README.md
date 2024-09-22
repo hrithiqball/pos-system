@@ -14,6 +14,7 @@ Prerequisites
 - unix-like OS (Linux, MacOS)
 - corepack
 - postgresql
+- docker
 
 Installation
 
@@ -26,4 +27,11 @@ Adding ShadCN UI
 
 ```bash
 pnpm add ui {name}
+```
+
+Running Development Server
+
+```bash
+docker compose -f docker-compose.local.yml up -d
+pnpm dev
 ```

@@ -1,5 +1,5 @@
 {
-  "extends": "@pkg/typescript-config/react-library.json",
+  "extends": "@pkg/typescript/react-library.json",
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "dist",
@@ -13,7 +13,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@app/auth-service/*": ["./src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"

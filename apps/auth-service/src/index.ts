@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { createSecureServer } from 'node:http2'
 import { env } from '@app/auth-service/config/env'
+import { rateLimitMiddleware } from '@app/auth-service/middlewares/rate-limit'
 import { authRouter } from '@app/auth-service/routes/auth'
 import { userRouter } from '@app/auth-service/routes/user'
 import { serve } from '@hono/node-server'
@@ -9,9 +10,11 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
 export const app = new Hono()
-  .basePath('/api')
+  .use('*', rateLimitMiddleware)
   .use(cors({ origin: origin => origin || '*', credentials: true }))
   .use(logger())
+  .get('/', c => c.text('Auth service running'))
+  .basePath('/api')
   .route('/auth', authRouter)
   .route('/user', userRouter)
 
@@ -22,7 +25,8 @@ serve({
   createServer: createSecureServer,
   serverOptions: {
     key: readFileSync('key.pem'),
-    cert: readFileSync('cert.pem')
+    cert: readFileSync('cert.pem'),
+    allowHTTP1: true
   },
   port: env.PORT
 })
