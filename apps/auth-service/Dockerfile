@@ -5,11 +5,20 @@ FROM base AS builder
 RUN apk add --no-cache gcompat
 WORKDIR /app
 
-COPY package*json tsconfig.json src ./
+RUN npm install -g pnpm
 
-RUN npm ci && \
-    npm run build && \
-    npm prune --production
+COPY ./pnpm-lock.yaml ./
+COPY ./apps/auth-service/package.json ./
+COPY ./apps/auth-service/tsconfig.json ./
+COPY ./apps/auth-service/src ./src
+
+RUN pnpm install --no-frozen-lockfile --production
+# RUN pnpm install --frozen-lockfile --production
+RUN pnpm run build
+
+# RUN npm ci && \
+#     npm run build && \
+#     npm prune --production
 
 FROM base AS runner
 WORKDIR /app

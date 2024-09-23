@@ -1,7 +1,7 @@
 import { redis } from '@app/auth-service/lib/redis'
-import { Context, Next } from 'hono'
+import { createMiddleware } from 'hono/factory'
 
-export async function rateLimitMiddleware(c: Context, next: Next) {
+export const rateLimitMiddleware = createMiddleware(async (c, next) => {
   const clientIP = c.req.header('x-forwarded-for') || c.req.header('remote-addr') || 'unknown-ip'
   const requestLimit = 15
   const timeoutWindow = 60 * 60
@@ -19,4 +19,4 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   }
 
   await next()
-}
+})

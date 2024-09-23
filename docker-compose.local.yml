@@ -1,4 +1,28 @@
 services:
+  auth-service:
+    build:
+      context: ./
+      dockerfile: ./apps/auth-service/Dockerfile
+    ports:
+      - '3003:3003'
+    volumes:
+      - ../apps/auth-service:/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+
+  pos-web:
+    build:
+      context: ./apps/pos-web
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - auth-service
+    networks:
+      - app-network
+
   redis:
     image: redis:latest
     container_name: redis
@@ -14,4 +38,6 @@ volumes:
 
 networks:
   redis-network:
+    driver: bridge
+  app-network:
     driver: bridge

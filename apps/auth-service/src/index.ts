@@ -8,13 +8,15 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { poweredBy } from 'hono/powered-by'
 
 export const app = new Hono()
-  .use('*', rateLimitMiddleware)
-  .use(cors({ origin: origin => origin || '*', credentials: true }))
-  .use(logger())
   .get('/', c => c.text('Auth service running'))
   .basePath('/api')
+  .use(cors({ origin: origin => origin || '*', credentials: true }))
+  .use('*', rateLimitMiddleware)
+  .use(poweredBy())
+  .use(logger())
   .route('/auth', authRouter)
   .route('/user', userRouter)
 
