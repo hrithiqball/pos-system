@@ -1,4 +1,4 @@
-import { redis } from '@app/auth-service/lib/redis'
+import redis from '@app/auth-service/lib/redis'
 import { createMiddleware } from 'hono/factory'
 
 export const rateLimitMiddleware = createMiddleware(async (c, next) => {

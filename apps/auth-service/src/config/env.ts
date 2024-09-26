@@ -18,5 +18,17 @@ export const env = {
     : (() => {
         console.error('Missing PORT environment variable')
         process.exit(1)
+      })(),
+  REDIS_HOST: process.env.REDIS_HOST
+    ? process.env.REDIS_HOST.toString()
+    : (() => {
+        console.error('Missing REDIS_HOST environment variable')
+        process.exit(1)
+      })(),
+  REDIS_PORT: process.env.REDIS_PORT
+    ? parseInt(process.env.REDIS_PORT, 10)
+    : (() => {
+        console.error('Missing REDIS_PORT environment variable')
+        process.exit(1)
       })()
 }

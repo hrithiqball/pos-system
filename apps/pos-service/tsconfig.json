@@ -1,0 +1,22 @@
+{
+  "extends": "@pkg/typescript/base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "outDir": "dist",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/pos-service/*": ["./src/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

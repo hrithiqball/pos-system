@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@pkg/ui/button'
-import { Armchair, DollarSign, LayoutDashboard, PieChart, Settings2, User2 } from 'lucide-react'
+import {
+  Armchair,
+  DollarSign,
+  LayoutDashboard,
+  Package2,
+  PieChart,
+  Settings2,
+  Star,
+  User2
+} from 'lucide-react'
 
 export function Sidebar() {
   return (
@@ -23,6 +32,16 @@ export function Sidebar() {
       <Button size="icon" asChild>
         <Link to="/cashier">
           <DollarSign />
+        </Link>
+      </Button>
+      <Button size="icon" asChild>
+        <Link to="/inventory">
+          <Package2 />
+        </Link>
+      </Button>
+      <Button size="icon" asChild>
+        <Link to="/loyalty">
+          <Star />
         </Link>
       </Button>
       <Button size="icon" asChild>
