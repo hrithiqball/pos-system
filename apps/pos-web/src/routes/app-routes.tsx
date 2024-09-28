@@ -28,6 +28,7 @@ export default function AppRoutes() {
             <Route path="/table" element={<TablePage />} />
             <Route path="/cashier" element={<CashierPage />} />
             <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/settings/:type" element={<SettingsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
 

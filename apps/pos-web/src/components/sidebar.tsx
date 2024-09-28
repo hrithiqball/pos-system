@@ -20,37 +20,37 @@ export function Sidebar() {
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/customers">
+        <Link to="/customers/">
           <User2 />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/table">
+        <Link to="/table/">
           <Armchair />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/cashier">
+        <Link to="/cashier/">
           <DollarSign />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/inventory">
+        <Link to="/inventory/">
           <Package2 />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/loyalty">
+        <Link to="/loyalty/">
           <Star />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/reports">
+        <Link to="/reports/">
           <PieChart />
         </Link>
       </Button>
       <Button size="icon" asChild>
-        <Link to="/settings">
+        <Link to="/settings/">
           <Settings2 />
         </Link>
       </Button>
