@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { cn } from '@pkg/ui/lib/utils'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
 import { Check } from 'lucide-react'
 
 const Checkbox = React.forwardRef<
@@ -22,4 +23,6 @@ const Checkbox = React.forwardRef<
 ))
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
-export { Checkbox }
+type Checked = DropdownMenuCheckboxItemProps['checked']
+
+export { Checkbox, type Checked }
