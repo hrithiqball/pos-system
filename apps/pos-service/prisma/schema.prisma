@@ -1,14 +1,137 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["auth", "public"]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("refresh_tokens")
+  @@schema("auth")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  name         String
+  phone        String?
+  password     String
+  role         ROLE           @default(USER)
+  department   DEPARTMENT     @default(GENERAL)
+  image        String?
+  created_at   DateTime       @default(now()) @map("created_at")
+  updated_at   DateTime       @default(now()) @map("updated_at")
+  refreshToken RefreshToken[]
+
+  @@map("users")
+  @@schema("auth")
+}
+
+model Product {
+  id          String        @id
+  name        String
+  description String?
+  price       Float
+  stock       Int
+  typeId      String        @map("type_id")
+  image       String?
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @map("updated_at")
+  OrderDetail OrderDetail[]
+  type        Type          @relation(fields: [typeId], references: [id])
+
+  @@map("products")
+  @@schema("public")
+}
+
+model Type {
+  id          String    @id
+  name        String
+  description String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  Product     Product[]
+
+  @@map("types")
+  @@schema("public")
+}
+
+model Order {
+  id          String        @id
+  status      String
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @map("updated_at")
+  customerId  String?
+  OrderDetail OrderDetail[]
+  Customer    Customer?     @relation(fields: [customerId], references: [id])
+
+  @@map("orders")
+  @@schema("public")
+}
+
+model OrderDetail {
+  id        String   @id
+  orderId   String   @map("order_id")
+  productId String   @map("product_id")
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_details")
+  @@schema("public")
+}
+
+model Customer {
+  id           String   @id
+  name         String
+  email        String
+  phone        String
+  address      String
+  loyaltyPoint Int      @default(0) @map("loyalty_point")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+  Order        Order[]
+
+  @@map("customers")
+  @@schema("public")
+}
+
+model Voucher {
+  id          String   @id
+  code        String
+  discount    Float
+  limit       Int
+  expiredDate DateTime @map("expired_date")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  @@map("vouchers")
+  @@schema("public")
+}
+
+enum DEPARTMENT {
+  GENERAL
+
+  @@schema("auth")
+}
+
+enum ROLE {
+  USER
+  ADMIN
+
+  @@schema("auth")
 }
