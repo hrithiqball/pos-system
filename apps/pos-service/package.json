@@ -6,9 +6,9 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@pkg/validation": "workspace:*",
     "@hono/node-server": "^1.13.1",
     "@hono/zod-validator": "^0.2.2",
-    "@pkg/validation": "workspace:*",
     "@prisma/client": "^5.19.1",
     "dotenv": "^16.4.5",
     "hono": "^4.6.3",
@@ -19,7 +19,8 @@
     "@pkg/typescript": "workspace:*",
     "@types/node": "^20.11.17",
     "prisma": "^5.19.1",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "typescript": "^5.6.2"
   },
   "exports": {
     "./*": "./src/*.ts"

@@ -8,13 +8,13 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { poweredBy } from 'hono/powered-by'
 
-const app = new Hono()
+export const app = new Hono()
   .get('/', c => c.text('POS service running!'))
   .basePath('/api')
   .use(cors({ origin: origin => origin || '*', credentials: true }))
   .use(poweredBy())
   .use(logger())
-// .route('/product', productRouter)
+  .route('/product', productRouter)
 
 console.log(`POS Service is running on port ${env.PORT}`)
 
@@ -28,5 +28,3 @@ serve({
   },
   port: env.PORT
 })
-
-export type PosServiceType = typeof app

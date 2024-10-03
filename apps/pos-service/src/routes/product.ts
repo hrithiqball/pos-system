@@ -6,9 +6,9 @@ import { HTTPException } from 'hono/http-exception'
 import { nanoid } from 'nanoid'
 
 export const productRouter = new Hono()
-  .post('/', zValidator('form', createProductSchema), async c => {
+  .post('/', zValidator('json', createProductSchema), async c => {
     try {
-      const formData = c.req.valid('form')
+      const formData = c.req.valid('json')
 
       const product = await db.product.create({
         data: {
@@ -53,10 +53,10 @@ export const productRouter = new Hono()
       throw new HTTPException(500, { message: 'Internal Server Error' })
     }
   })
-  .patch('/:id', zValidator('form', updateProductSchema), async c => {
+  .patch('/:id', zValidator('json', updateProductSchema), async c => {
     try {
       const { id } = c.req.param()
-      const formData = c.req.valid('form')
+      const formData = c.req.valid('json')
 
       const product = await db.product.findUnique({ where: { id } })
 

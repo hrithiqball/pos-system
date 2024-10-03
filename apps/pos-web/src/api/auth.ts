@@ -1,4 +1,4 @@
-import { LoginSchema } from '@pkg/validation/types/auth'
+import type { LoginSchema } from '@pkg/validation/types/auth'
 import { errorHandler } from '@pkg/validation/utils/error-handler'
 
 import { authService } from '@/lib/hono'
@@ -23,7 +23,7 @@ export async function login(form: LoginSchema) {
 export const $logout = authService.api.auth.logout.$post
 export async function logout() {
   try {
-    const response = await authService.api.auth.logout.$post({})
+    const response = await authService.api.auth.logout.$post()
 
     if (!response.ok) {
       const errorMessage = await response.text()

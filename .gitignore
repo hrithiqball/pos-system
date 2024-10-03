@@ -4,9 +4,6 @@
 # pnpm store
 .pnpm-store
 
-# pnpm-lock file
-pnpm-lock.yaml
-
 # Yarn and npm lock files
 yarn.lock
 package-lock.json

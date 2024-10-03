@@ -1,4 +1,4 @@
-import { User } from '@app/auth-service/types/user'
+import type { User } from '@app/auth-service/types/user'
 import { errorHandler } from '@pkg/validation/utils/error-handler'
 
 import { fetch } from '@/api/retry'
